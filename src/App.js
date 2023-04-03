@@ -1,13 +1,9 @@
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
-import './App.css';
-import Navbar from './components/Navbar';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import AddBook from "./pages/AddBook";
-import BookList from "./pages/BookList";
+import AllBooks from "./pages/AllBooks";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -17,17 +13,17 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <Navbar />
+        <Navbar />
         <div className="container">
-        <Routes>
+          <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/books" element={<BookList />} />
+            <Route path="/books" element={<AllBooks />} />
             <Route path="/add" element={<AddBook />} />
             <Route path="/update/:id" element={<UpdateBook />} />
             <Route path="/books/:id" element={<Detail />} />
             <Route path="/about" element={<About />} />
             <Route path="/search" element={<Search />} />
-        </Routes>
+          </Routes>
         </div>
       </Router>
     </div>

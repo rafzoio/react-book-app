@@ -14,7 +14,7 @@ const Navbar = () => {
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/" className="flex items-center" activeClassName="active">
+          <Link to="/" className="flex items-center">
             <img src={BookIcon} className="h-8 mr-3" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               LibReact
@@ -26,26 +26,26 @@ const Navbar = () => {
                 <Link
                   to="/books"
                   className={
-                    activeLink === "Search"
+                    activeLink === "All Books"
                       ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                       : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   }
                   onClick={handleNavLinkClick}
                 >
-                  All books
+                  All Books
                 </Link>
               </li>
               <li>
                 <Link
                   to="/add"
                   className={
-                    activeLink === "Search"
+                    activeLink === "Add Book"
                       ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                       : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   }
                   onClick={handleNavLinkClick}
                 >
-                  Add book
+                  Add Book
                 </Link>
               </li>
 
@@ -66,7 +66,7 @@ const Navbar = () => {
                 <Link
                   to="/about"
                   className={
-                    activeLink === "Search"
+                    activeLink === "About"
                       ? "block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                       : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   }
