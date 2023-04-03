@@ -4,13 +4,13 @@ import {
   Routes,
 } from "react-router-dom";
 import './App.css';
-import Footer from "./components/Footer";
 import Navbar from './components/Navbar';
 import About from "./pages/About";
 import AddBook from "./pages/AddBook";
 import BookList from "./pages/BookList";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
+import Search from "./pages/Search";
 import UpdateBook from "./pages/UpdateBook";
 
 function App() {
@@ -23,12 +23,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/books" element={<BookList />} />
             <Route path="/add" element={<AddBook />} />
-            <Route path="/add" element={<UpdateBook />} />
-            <Route path="/detail" element={<Detail />} />
+            <Route path="/update/:id" element={<UpdateBook />} />
+            <Route path="/books/:id" element={<Detail />} />
             <Route path="/about" element={<About />} />
+            <Route path="/search" element={<Search />} />
         </Routes>
         </div>
-        <Footer />
       </Router>
     </div>
   );
