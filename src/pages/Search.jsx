@@ -4,6 +4,7 @@ import BookTable from "../components/BookTable";
 
 const Search = () => {
   const [bookList, setBookList] = useState([]);
+  const [showList, setShowList] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
   const fetchBooks = async (searchValue) => {
@@ -22,9 +23,19 @@ const Search = () => {
     }
   };
 
+  const handleClick = () => {
+    setShowList(false);
+    fetchBooks(searchValue);
+    setShowList(true);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label
           for="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -65,13 +76,13 @@ const Search = () => {
           <button
             type="submit"
             className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => fetchBooks(searchValue)}
+            onClick={() => handleClick()}
           >
             Search
           </button>
         </div>
       </form>
-      <BookTable books={bookList} />
+      {showList && <BookTable books={bookList} />}
     </div>
   );
 };
