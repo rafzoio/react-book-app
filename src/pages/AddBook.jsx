@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddBook = () => {
@@ -10,15 +11,27 @@ const AddBook = () => {
     synopsis: "",
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setNewBook({ ...newBook, [name]: value });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(newBook);
-    // Submit form data here
+    postBook(newBook);
+  };
+
+  const postBook = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8081/book-api/book-api",
+        { books: { newBook } },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -38,7 +51,7 @@ const AddBook = () => {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Enter a title..."
             value={newBook.title}
-            onChange={handleChange}
+            onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
           />
         </div>
         <div className="mb-3 flex flex-row gap-3 items-center">
@@ -54,7 +67,7 @@ const AddBook = () => {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Enter an author's name..."
             value={newBook.author}
-            onChange={handleChange}
+            onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
           />
         </div>
         <div className="mb-3 flex flex-row gap-3 items-center">
@@ -69,7 +82,7 @@ const AddBook = () => {
             id="date"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             value={newBook.date}
-            onChange={handleChange}
+            onChange={(e) => setNewBook({ ...newBook, date: e.target.value })}
           />
         </div>
 
@@ -86,7 +99,9 @@ const AddBook = () => {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Enter any characters' names..."
             value={newBook.characters}
-            onChange={handleChange}
+            onChange={(e) =>
+              setNewBook({ ...newBook, characters: e.target.value })
+            }
           />
         </div>
         <div className="mb-3 flex flex-row gap-3 items-center">
@@ -102,7 +117,7 @@ const AddBook = () => {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Enter one or multiple genres..."
             value={newBook.genres}
-            onChange={handleChange}
+            onChange={(e) => setNewBook({ ...newBook, genres: e.target.value })}
           />
         </div>
         <div className="mb-3 flex flex-row gap-3 items-center">
@@ -118,7 +133,9 @@ const AddBook = () => {
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter the synopsis..."
             value={newBook.synopsis}
-            onChange={handleChange}
+            onChange={(e) =>
+              setNewBook({ ...newBook, synopsis: e.target.value })
+            }
           ></textarea>
         </div>
 
