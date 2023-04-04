@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DeleteIcon from "../resources/delete.svg";
+import EditIcon from "../resources/edit.png";
+import InfoIcon from "../resources/info.png";
 import Spinner from "./Spinner";
 
 const BookTable = ({ books }) => {
   return books.length === 0 ? (
     <Spinner />
   ) : (
-    <div>
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <div className="mt-4 ">
+      <table className="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400">
         <thead className="text-s text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -38,16 +41,17 @@ const BookTable = ({ books }) => {
               </th>
               <td className="px-6 py-4">{book.title}</td>
               <td className="px-6 py-4">{book.date}</td>
-              <td className="px-6 py-1 flex flex-row items-stretch">
-                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 my-3 mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                  <Link to={`/books/${book.id}`}>Details</Link>
-                </button>
-                <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 my-3 mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                  <Link to={`/update/${book.id}`}>Edit</Link>
-                </button>
-                <button className=" focus:outline-none dark:focus:ring-blue-800focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 my-3 mx-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                  <Link to={`/delete/${book.id}`}>Delete</Link>
-                </button>
+              <td className="px-6 py-5 gap-3 flex flex-row justify-evenly">
+                <Link to={`/books/${book.id}`}>
+                  <img className="w-7 py-auto" alt="Details" src={InfoIcon} />
+                </Link>
+                <Link to={`/update/${book.id}`}>
+                  <img className="w-7 py-auto" alt="Update" src={EditIcon} />
+                </Link>
+
+                <Link to={`/delete/${book.id}`}>
+                  <img className="w-7 py-auto" alt="Delete" src={DeleteIcon} />
+                </Link>
               </td>
             </tr>
           ))}

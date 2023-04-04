@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <div className="container">
+        <div className="container mx-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/books" element={<AllBooks />} />

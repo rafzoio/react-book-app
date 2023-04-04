@@ -7,14 +7,17 @@ const Navbar = () => {
 
   const handleNavLinkClick = (event) => {
     setActiveLink(event.target.innerText);
-    console.log(activeLink);
   };
 
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/" className="flex items-center">
+          <Link
+            to="/"
+            onClick={handleNavLinkClick}
+            className="flex items-center"
+          >
             <img src={BookIcon} className="h-8 mr-3" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               LibReact
