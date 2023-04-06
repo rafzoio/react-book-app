@@ -1,11 +1,36 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import DeleteIcon from "../resources/delete.svg";
+import EditIcon from "../resources/edit.png";
 
 const Detail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [book, setBook] = useState(null);
+  const [book, setBook] = useState({
+    title: "",
+    author: "",
+    date: "",
+    genres: "",
+    characters: "",
+    synopsis: "",
+  });
+
+  const deleteBook = async (id) => {
+    try {
+      console.log("Hello");
+      await axios.delete("http://localhost:8081/book-api/book-api?id=" + id, {
+        headers: {
+          Accept: "application/json",
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    alert("Deleted book " + book.title);
+    navigate("/books/" + id);
+  };
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -33,9 +58,17 @@ const Detail = () => {
 
   return (
     <div>
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden p-3 m-10">
-        <div className="px-6 py-4">
-          <div className="font-bold text-6xl mb-2">{book.title}</div>
+      <div className="bg-white rounded-lg mt-5">
+        <div className="px-6 py-4 flex flex-col justify-start">
+          <div className="mb-2 flex flex-row justify-center items-center">
+            <h1 className="font-bold text-6xl pr-5 ">{book.title}</h1>
+            <Link to={`/update/${book.id}`}>
+              <img className="w-10 pt-4" alt="Update" src={EditIcon} />
+            </Link>
+            <Link onClick={() => deleteBook(book.id)}>
+              <img className="w-10 pt-4" alt="Delete" src={DeleteIcon} />
+            </Link>
+          </div>
           <p className="text-gray-700 text-2xl">
             <span className="font-semibold">Author:</span> {book.author}
           </p>
@@ -58,8 +91,6 @@ const Detail = () => {
           </div>
         </div>
       </div>
-      <button>Update</button>
-      <button>Delete</button>
     </div>
   );
 };

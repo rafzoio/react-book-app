@@ -13,25 +13,23 @@ const AddBook = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(newBook);
-    postBook(newBook);
+    postBook();
   };
 
   const postBook = async () => {
     try {
       await axios.post(
         "http://localhost:8081/book-api/book-api",
-        { books: { newBook } },
+        {
+          books: [newBook],
+        },
         {
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
           },
         }
       );
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   return (

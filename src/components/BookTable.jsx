@@ -1,15 +1,35 @@
+import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteIcon from "../resources/delete.svg";
 import EditIcon from "../resources/edit.png";
 import InfoIcon from "../resources/info.png";
 import Spinner from "./Spinner";
 
 const BookTable = ({ books }) => {
+  const navigate = useNavigate();
+  const deleteBook = async (book) => {
+    try {
+      console.log("Hello");
+      await axios.delete(
+        "http://localhost:8081/book-api/book-api?id=" + book.id,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+    alert("Deleted book " + book.title);
+    navigate("/books");
+  };
+
   return books.length === 0 ? (
     <Spinner />
   ) : (
-    <div className="mt-4 ">
+    <div>
       <table className="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400">
         <thead className="text-s text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -49,7 +69,7 @@ const BookTable = ({ books }) => {
                   <img className="w-7 py-auto" alt="Update" src={EditIcon} />
                 </Link>
 
-                <Link to={`/delete/${book.id}`}>
+                <Link onClick={() => deleteBook(book)}>
                   <img className="w-7 py-auto" alt="Delete" src={DeleteIcon} />
                 </Link>
               </td>
