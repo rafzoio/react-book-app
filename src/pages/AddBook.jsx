@@ -13,28 +13,33 @@ const AddBook = () => {
   });
 
   const handleSubmit = (event) => {
+    var convert = require("xml-js");
+    var options = { compact: true, ignoreComment: true, spaces: 4 };
     event.preventDefault();
-    postBook();
+    let data = "";
+    if (format === "application/json") {
+      data = { books: [newBook] };
+    } else if (format === "application/xml") {
+      data = convert.js2xml({ bookList: { book: newBook } }, options);
+    }
+    console.log(data);
+    postBook(data);
   };
 
   const changeFormat = (event) => {
     setFormat(event.target.value);
   };
 
-  const postBook = async () => {
+  const postBook = async (data) => {
     try {
-      await axios.post(
-        "http://localhost:8081/book-api/book-api",
-        {
-          books: [newBook],
+      await axios.post("http://localhost:8081/book-api/book-api", data, {
+        headers: {
+          "Content-Type": format,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {}
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
