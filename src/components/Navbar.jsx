@@ -20,7 +20,7 @@ const Navbar = () => {
           >
             <img src={BookIcon} className="h-8 mr-3" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              LibReact
+              PageTurnerJS
             </span>
           </Link>
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
