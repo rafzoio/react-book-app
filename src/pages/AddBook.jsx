@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const AddBook = () => {
+  const [format, setFormat] = useState("application/json");
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
@@ -14,6 +15,10 @@ const AddBook = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     postBook();
+  };
+
+  const changeFormat = (event) => {
+    setFormat(event.target.value);
   };
 
   const postBook = async () => {
@@ -136,7 +141,18 @@ const AddBook = () => {
             }
           ></textarea>
         </div>
-
+        <label className="text-white" htmlFor="format-dropdown">
+          Format:{" "}
+        </label>
+        <select
+          className="mr-4"
+          id="format-dropdown"
+          value={format}
+          onChange={(event) => changeFormat(event)}
+        >
+          <option>application/json</option>
+          <option>application/xml</option>
+        </select>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
