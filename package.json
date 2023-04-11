@@ -10,9 +10,11 @@
     "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "stream": "^0.0.2",
+    "toast": "^0.5.4",
     "web-vitals": "^2.1.4",
     "xml-js": "^1.6.11"
   },

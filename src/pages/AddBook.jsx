@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const AddBook = () => {
   const [format, setFormat] = useState("application/json");
@@ -11,17 +12,16 @@ const AddBook = () => {
     characters: "",
     synopsis: "",
   });
+  const [data, setData] = useState("");
 
   const handleSubmit = (event) => {
-    var convert = require("xml-js");
-    var options = { compact: true, ignoreComment: true, spaces: 4 };
     event.preventDefault();
-    let data = "";
+
     if (format === "application/json") {
-      data = { books: [newBook] };
+      setData(JSON.stringify({ books: [newBook] }));
     } else if (format === "application/xml") {
-      data = convert.js2xml({ bookList: { book: newBook } }, options);
     }
+
     console.log(data);
     postBook(data);
   };
@@ -37,8 +37,17 @@ const AddBook = () => {
           "Content-Type": format,
         },
       });
+      toast.promise(Promise.resolve(), {
+        pending: "Posting book...",
+        success: "Book posted successfully!",
+        error: "Failed to post book.",
+      });
     } catch (error) {
-      console.log("error", error);
+      toast.promise(Promise.reject(), {
+        pending: "Posting book...",
+        success: "Book posted successfully!",
+        error: "Failed to post book.",
+      });
     }
   };
 
@@ -146,6 +155,7 @@ const AddBook = () => {
             }
           ></textarea>
         </div>
+
         <label className="text-white" htmlFor="format-dropdown">
           Format:{" "}
         </label>
@@ -160,7 +170,7 @@ const AddBook = () => {
         </select>
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none mr-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
         >
           Add book
         </button>
