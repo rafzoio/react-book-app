@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import DeleteIcon from "../resources/delete.svg";
 import EditIcon from "../resources/edit.png";
@@ -19,11 +20,19 @@ const BookTable = ({ books }) => {
           },
         }
       );
+      navigate("/books");
+      toast.promise(Promise.resolve(), {
+        pending: "Deleting book...",
+        success: "Book deleted successfully!",
+        error: "Failed to delete book.",
+      });
     } catch (error) {
-      console.error(error);
+      toast.promise(Promise.reject(), {
+        pending: "Deleting book...",
+        success: "Book deleted successfully!",
+        error: "Failed to delete book.",
+      });
     }
-    alert("Deleted book " + book.title);
-    navigate("/books");
   };
 
   return books.length === 0 ? (

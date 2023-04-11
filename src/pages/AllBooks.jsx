@@ -6,7 +6,7 @@ import BookTable from "../components/BookTable";
 const AllBooks = () => {
   const [page, setPage] = useState(1);
   const [numPages, setNumPages] = useState(1);
-  const [pageLength, setPageLength] = useState(20);
+  const [pageLength, setPageLength] = useState(10);
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
@@ -48,6 +48,14 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
+              setPage(1);
+            }}
+          >
+            First
+          </Link>
+          <Link
+            className="text-white hover:text-blue-600"
+            onClick={() => {
               setPage(page - 1);
             }}
           >
@@ -69,9 +77,18 @@ const AllBooks = () => {
           >
             Next
           </Link>
+          <Link
+            className="text-white hover:text-blue-600"
+            onClick={() => {
+              setPage(numPages);
+            }}
+          >
+            Last
+          </Link>
         </div>
         <div className="relative ml-10 text-white flex flex-row gap-3">
           <p>Page Length:</p>
+          <Link onClick={() => setPageLength(5)}>5</Link>
           <Link onClick={() => setPageLength(10)}>10</Link>
           <Link onClick={() => setPageLength(20)}>20</Link>
           <Link onClick={() => setPageLength(50)}>50</Link>

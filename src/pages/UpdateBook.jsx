@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateBook = () => {
@@ -55,7 +56,18 @@ const UpdateBook = () => {
           },
         }
       );
-    } catch (error) {}
+      toast.promise(Promise.resolve(), {
+        pending: "Updating book...",
+        success: "Book updated successfully!",
+        error: "Failed to update book.",
+      });
+    } catch (error) {
+      toast.promise(Promise.reject(), {
+        pending: "Updating book...",
+        success: "Book updated successfully!",
+        error: "Failed to update book.",
+      });
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import DeleteIcon from "../resources/delete.svg";
@@ -25,11 +26,19 @@ const Detail = () => {
           Accept: "application/json",
         },
       });
+      navigate("/books/" + (id - 1));
+      toast.promise(Promise.resolve(), {
+        pending: "Deleting book...",
+        success: "Book deleted successfully!",
+        error: "Failed to delete book.",
+      });
     } catch (error) {
-      console.error(error);
+      toast.promise(Promise.reject(), {
+        pending: "Deleting book...",
+        success: "Book deleted successfully!",
+        error: "Failed to delete book.",
+      });
     }
-    alert("Deleted book " + book.title);
-    navigate("/books/" + id);
   };
 
   useEffect(() => {
@@ -46,7 +55,8 @@ const Detail = () => {
         );
         setBook(response.data.books[0]);
       } catch (error) {
-        console.error(error);
+        navigate("/books");
+        toast.error("Book not found");
       }
     };
     fetchBook();

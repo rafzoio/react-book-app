@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Navbar />
         <div className="container mx-auto">
+          <Toaster position="top-right" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/books" element={<AllBooks />} />
