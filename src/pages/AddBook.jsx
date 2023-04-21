@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const AddBook = () => {
+  const qs = require("querystring");
   const [format, setFormat] = useState("application/json");
   const [newBook, setNewBook] = useState({
     title: "",
@@ -20,6 +21,7 @@ const AddBook = () => {
     if (format === "application/json") {
       setData(JSON.stringify({ books: [newBook] }));
     } else if (format === "application/xml") {
+      setData(qs.stringify({ bookList: [newBook] }));
     }
 
     console.log(data);
@@ -28,6 +30,7 @@ const AddBook = () => {
 
   const changeFormat = (event) => {
     setFormat(event.target.value);
+    console.log(format);
   };
 
   const postBook = async (data) => {
@@ -35,6 +38,7 @@ const AddBook = () => {
       await axios.post("http://localhost:8081/book-api/book-api", data, {
         headers: {
           "Content-Type": format,
+          Accept: "application/json",
         },
       });
       toast.promise(Promise.resolve(), {
