@@ -56,17 +56,9 @@ const UpdateBook = () => {
           },
         }
       );
-      toast.promise(Promise.resolve(), {
-        pending: "Updating book...",
-        success: "Book updated successfully!",
-        error: "Failed to update book.",
-      });
+      toast.success("Successfully updated book " + id);
     } catch (error) {
-      toast.promise(Promise.reject(), {
-        pending: "Updating book...",
-        success: "Book updated successfully!",
-        error: "Failed to update book.",
-      });
+      toast.error("Error updating book " + id);
     }
   };
 
