@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const UpdateBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [format, setFormat] = useState("application/json");
   const [existingBook, setExistingBook] = useState({
     id: id,
     title: "",
@@ -37,29 +38,53 @@ const UpdateBook = () => {
     fetchBook();
   }, [id]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    updateBook();
-    navigate("/books/" + id);
-  };
+    const xmlbuilder = require("xmlbuilder");
 
-  const updateBook = async () => {
+    const newBookXml = xmlbuilder
+      .create("bookList")
+      .ele("book")
+      .ele("title", existingBook.title)
+      .up()
+      .ele("author", existingBook.author)
+      .up()
+      .ele("date", existingBook.date)
+      .up()
+      .ele("genres", existingBook.genres)
+      .up()
+      .ele("characters", existingBook.characters)
+      .up()
+      .ele("synopsis", existingBook.synopsis)
+      .up()
+      .end({ pretty: true });
+
+    const postData =
+      format === "application/xml" ? newBookXml : { books: [existingBook] };
+
     try {
-      await axios.put(
+      const response = await axios.put(
         "http://localhost:8081/book-api/book-api",
-        {
-          books: [existingBook],
-        },
+        postData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": format,
+            Accept: "application/json",
           },
         }
       );
-      toast.success("Successfully updated book " + id);
+
+      console.log(response.data);
+      navigate("/books/" + existingBook.id);
+      toast.success("Book " + existingBook.id + " updated successfully!");
     } catch (error) {
-      toast.error("Error updating book " + id);
+      console.error(error);
+      toast.error("Failed to update book " + existingBook.id);
     }
+  };
+
+  const changeFormat = (event) => {
+    setFormat(event.target.value);
   };
 
   return (
@@ -176,7 +201,18 @@ const UpdateBook = () => {
             }
           ></textarea>
         </div>
-
+        <label className="text-white" htmlFor="format-dropdown">
+          Format:{" "}
+        </label>
+        <select
+          className="mr-4"
+          id="format-dropdown"
+          value={format}
+          onChange={(event) => changeFormat(event)}
+        >
+          <option>application/json</option>
+          <option>application/xml</option>
+        </select>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
