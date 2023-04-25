@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "../resources/delete.svg";
 import EditIcon from "../resources/edit.png";
 import InfoIcon from "../resources/info.png";
-import Spinner from "./Spinner";
 
 const BookTable = ({ books, onDelete }) => {
   const deleteBook = async (book) => {
@@ -19,11 +18,7 @@ const BookTable = ({ books, onDelete }) => {
           "Content-Type": "application/json",
         },
       });
-      toast.promise(Promise.resolve(), {
-        pending: "Deleting book...",
-        success: "Book deleted successfully!",
-        error: "Failed to delete book.",
-      });
+      toast.success("Book " + book.id + " deleted successfully");
       onDelete(book.id);
     } catch (error) {
       toast.promise(Promise.reject(), {
@@ -34,9 +29,7 @@ const BookTable = ({ books, onDelete }) => {
     }
   };
 
-  return books.length === 0 ? (
-    <Spinner />
-  ) : (
+  return (
     <div>
       <table className="w-full text-sm text-left rounded-lg text-gray-500 dark:text-gray-400">
         <thead className="text-s text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -48,7 +41,7 @@ const BookTable = ({ books, onDelete }) => {
               Title
             </th>
             <th scope="col" className="px-6 py-3">
-              Date
+              Author
             </th>
             <th scope="col" className="px-6 py-3">
               Options
@@ -68,7 +61,7 @@ const BookTable = ({ books, onDelete }) => {
                 {book.id}
               </th>
               <td className="px-6 py-4">{book.title}</td>
-              <td className="px-6 py-4">{book.date}</td>
+              <td className="px-6 py-4">{book.author}</td>
               <td className="px-6 py-5 gap-3 flex flex-row justify-evenly">
                 <Link to={`/books/${book.id}`}>
                   <img className="w-7 py-auto" alt="Details" src={InfoIcon} />

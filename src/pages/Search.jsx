@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import BookTable from "../components/BookTable";
+import Spinner from "../components/Spinner";
 
 const Search = () => {
   const [bookList, setBookList] = useState([]);
   const [showList, setShowList] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchBooks = async (searchValue) => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         "http://localhost:8081/book-api/book-api?title=" + searchValue,
         {
@@ -18,6 +21,7 @@ const Search = () => {
         }
       );
       setBookList(response.data.books);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +86,7 @@ const Search = () => {
           </button>
         </div>
       </form>
-      {showList && <BookTable books={bookList} />}
+      {showList && (isLoading ? <Spinner /> : <BookTable books={bookList} />)}
     </div>
   );
 };

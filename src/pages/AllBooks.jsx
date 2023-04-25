@@ -2,8 +2,9 @@ import axios from "axios";
 import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BookTable from "../components/BookTable";
+import Spinner from "../components/Spinner";
 
 const AllBooks = () => {
   const page = useSelector((state) => state.page.currentPage);
@@ -11,10 +12,12 @@ const AllBooks = () => {
   const [numPages, setNumPages] = useState(1);
   const [pageLength, setPageLength] = useState(10);
   const [bookList, setBookList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchBooks = debounce(async () => {
       try {
+        setIsLoading(true);
         console.log(page);
         const response = await axios.get(
           `http://localhost:8081/book-api/book-api?page=${page}&pageSize=${pageLength}`,
@@ -27,6 +30,7 @@ const AllBooks = () => {
         );
         setBookList(response.data.books);
         setNumPages(response.headers["x-total-pages"]);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -108,7 +112,11 @@ const AllBooks = () => {
         </div>
       </div>
       <div className="pt-0">
-        <BookTable books={bookList} onDelete={handleDelete} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <BookTable books={bookList} onDelete={handleDelete} />
+        )}
       </div>
     </div>
   );
