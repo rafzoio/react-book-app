@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BookTable from "../components/BookTable";
 
 const AllBooks = () => {
-  const [page, setPage] = useState(1);
+  const page = useSelector((state) => state.page.currentPage);
+  const dispatch = useDispatch();
   const [numPages, setNumPages] = useState(1);
   const [pageLength, setPageLength] = useState(10);
   const [bookList, setBookList] = useState([]);
@@ -30,8 +32,8 @@ const AllBooks = () => {
     fetchBooks();
   }, [page, pageLength]);
 
-  const handlePageChange = (event) => {
-    setPage(parseInt(event.target.value));
+  const handlePageChange = (newPage) => {
+    dispatch({ type: "SET_CURRENT_PAGE", payload: newPage });
   };
 
   const displayOptions = () => {
@@ -49,7 +51,7 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
-              setPage(1);
+              handlePageChange(1);
             }}
           >
             First
@@ -57,7 +59,7 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
-              setPage(page - 1);
+              handlePageChange(page - 1);
             }}
           >
             Previous
@@ -73,7 +75,7 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
-              setPage(page + 1);
+              handlePageChange(page + 1);
             }}
           >
             Next
@@ -81,7 +83,7 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
-              setPage(numPages);
+              handlePageChange(numPages);
             }}
           >
             Last
