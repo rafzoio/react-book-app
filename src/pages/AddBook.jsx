@@ -52,7 +52,6 @@ const AddBook = () => {
 
       console.log(response.data);
 
-      // Reset form fields
       setNewBook({
         title: "",
         author: "",
@@ -62,12 +61,9 @@ const AddBook = () => {
         synopsis: "",
       });
 
-      // Show success message to user
       toast.success("Book added successfully!");
     } catch (error) {
       console.error(error);
-
-      // Show error message to user
       toast.error("Failed to add book.");
     }
   };
