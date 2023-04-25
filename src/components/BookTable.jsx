@@ -52,7 +52,7 @@ const BookTable = ({ books, onDelete }) => {
           {books.map((book) => (
             <tr
               key={book.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              className="bg-white dark:bg-gray-800 dark:border-gray-700"
             >
               <th
                 scope="row"
