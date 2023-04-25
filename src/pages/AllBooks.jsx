@@ -1,7 +1,8 @@
 import axios from "axios";
+import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BookTable from "../components/BookTable";
 
 const AllBooks = () => {
@@ -12,8 +13,9 @@ const AllBooks = () => {
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchBooks = debounce(async () => {
       try {
+        console.log(page);
         const response = await axios.get(
           `http://localhost:8081/book-api/book-api?page=${page}&pageSize=${pageLength}`,
           {
@@ -28,7 +30,7 @@ const AllBooks = () => {
       } catch (error) {
         console.error(error);
       }
-    };
+    }, 100);
     fetchBooks();
   }, [page, pageLength]);
 
@@ -42,6 +44,13 @@ const AllBooks = () => {
       options.push(<option key={i}>{i}</option>);
     }
     return options;
+  };
+
+  const handleDelete = (id) => {
+    setBookList(bookList.filter((b) => b.id !== id));
+    if (bookList.length === 0) {
+      handlePageChange(page - 1);
+    }
   };
 
   return (
@@ -99,7 +108,7 @@ const AllBooks = () => {
         </div>
       </div>
       <div className="pt-0">
-        <BookTable books={bookList} />
+        <BookTable books={bookList} onDelete={handleDelete} />
       </div>
     </div>
   );

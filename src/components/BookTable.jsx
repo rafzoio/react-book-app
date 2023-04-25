@@ -1,32 +1,30 @@
 import axios from "axios";
 import React from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DeleteIcon from "../resources/delete.svg";
 import EditIcon from "../resources/edit.png";
 import InfoIcon from "../resources/info.png";
 import Spinner from "./Spinner";
 
-const BookTable = ({ books }) => {
-  const navigate = useNavigate();
+const BookTable = ({ books, onDelete }) => {
   const deleteBook = async (book) => {
     try {
-      console.log("Hello");
-      await axios.delete(
-        "http://localhost:8081/book-api/book-api?id=" + book.id,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      navigate("/books");
+      await axios.delete("http://localhost:8081/book-api/book-api", {
+        params: {
+          id: book.id,
+        },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
       toast.promise(Promise.resolve(), {
         pending: "Deleting book...",
         success: "Book deleted successfully!",
         error: "Failed to delete book.",
       });
+      onDelete(book.id);
     } catch (error) {
       toast.promise(Promise.reject(), {
         pending: "Deleting book...",
