@@ -21,7 +21,8 @@
     "stream": "^0.0.2",
     "toast": "^0.5.4",
     "web-vitals": "^2.1.4",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "xmlbuilder": "^15.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

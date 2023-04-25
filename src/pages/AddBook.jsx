@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const AddBook = () => {
-  const qs = require("querystring");
   const [format, setFormat] = useState("application/json");
   const [newBook, setNewBook] = useState({
     title: "",
@@ -13,46 +12,68 @@ const AddBook = () => {
     characters: "",
     synopsis: "",
   });
-  const [data, setData] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (format === "application/json") {
-      setData(JSON.stringify({ books: [newBook] }));
-    } else if (format === "application/xml") {
-      setData(qs.stringify({ bookList: [newBook] }));
-    }
+    const xmlbuilder = require("xmlbuilder");
 
-    console.log(data);
-    postBook(data);
+    const newBookXml = xmlbuilder
+      .create("bookList")
+      .ele("book")
+      .ele("title", newBook.title)
+      .up()
+      .ele("author", newBook.author)
+      .up()
+      .ele("date", newBook.date)
+      .up()
+      .ele("genres", newBook.genres)
+      .up()
+      .ele("characters", newBook.characters)
+      .up()
+      .ele("synopsis", newBook.synopsis)
+      .up()
+      .end({ pretty: true });
+
+    const postData =
+      format === "application/xml" ? newBookXml : { books: [newBook] };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/book-api/book-api",
+        postData,
+        {
+          headers: {
+            "Content-Type": format,
+            Accept: "application/json",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      // Reset form fields
+      setNewBook({
+        title: "",
+        author: "",
+        date: "",
+        genres: "",
+        characters: "",
+        synopsis: "",
+      });
+
+      // Show success message to user
+      toast.success("Book added successfully!");
+    } catch (error) {
+      console.error(error);
+
+      // Show error message to user
+      toast.error("Failed to add book.");
+    }
   };
 
   const changeFormat = (event) => {
     setFormat(event.target.value);
-    console.log(format);
-  };
-
-  const postBook = async (data) => {
-    try {
-      await axios.post("http://localhost:8081/book-api/book-api", data, {
-        headers: {
-          "Content-Type": format,
-          Accept: "application/json",
-        },
-      });
-      toast.promise(Promise.resolve(), {
-        pending: "Posting book...",
-        success: "Book posted successfully!",
-        error: "Failed to post book.",
-      });
-    } catch (error) {
-      toast.promise(Promise.reject(), {
-        pending: "Posting book...",
-        success: "Book posted successfully!",
-        error: "Failed to post book.",
-      });
-    }
   };
 
   return (
