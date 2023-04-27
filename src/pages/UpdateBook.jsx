@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import xmlBuilder from "../utils/xmlBuilder";
 
 const UpdateBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const format = useSelector((state) => state.format.currentFormat);
   const [existingBook, setExistingBook] = useState({
     id: id,
