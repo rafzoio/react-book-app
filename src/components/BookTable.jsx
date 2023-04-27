@@ -31,9 +31,6 @@ const BookTable = ({ books, onDelete }) => {
         <thead className="text-s text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
-              ID
-            </th>
-            <th scope="col" className="px-6 py-3">
               Title
             </th>
             <th scope="col" className="px-6 py-3">
@@ -50,12 +47,6 @@ const BookTable = ({ books, onDelete }) => {
               key={book.id}
               className="bg-white dark:bg-gray-800 dark:border-gray-700"
             >
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {book.id}
-              </th>
               <td className="px-6 py-4">{book.title}</td>
               <td className="px-6 py-4">{book.author}</td>
               <td className="px-6 py-5 gap-3 flex flex-row justify-evenly">
