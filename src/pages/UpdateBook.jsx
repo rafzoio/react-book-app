@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import xmlBuilder from "../utils/xmlBuilder";
 
 const UpdateBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [format, setFormat] = useState("application/json");
+  const dispatch = useDispatch();
+  const format = useSelector((state) => state.format.currentFormat);
   const [existingBook, setExistingBook] = useState({
     id: id,
     title: "",
@@ -41,7 +43,6 @@ const UpdateBook = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const xmlbuilder = require("xmlbuilder");
 
     const newBookXml = xmlBuilder(existingBook);
 
@@ -69,16 +70,12 @@ const UpdateBook = () => {
     }
   };
 
-  const changeFormat = (event) => {
-    setFormat(event.target.value);
-  };
-
   return (
     <div className="flex flex-col align-middle mx-20 mb-5 mt-2">
-      <h1 className="text-4xl my-2 text-white">
+      <h1 className="text-4xl font-extrabold my-2 p-4 text-white">
         Updating book: {existingBook.title}
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form className="p-4" onSubmit={handleSubmit}>
         <div className="mb-3 flex flex-row gap-3 items-center">
           <label
             htmlFor="title"
@@ -187,18 +184,6 @@ const UpdateBook = () => {
             }
           ></textarea>
         </div>
-        <label className="text-white" htmlFor="format-dropdown">
-          Format:{" "}
-        </label>
-        <select
-          className="mr-4"
-          id="format-dropdown"
-          value={format}
-          onChange={(event) => changeFormat(event)}
-        >
-          <option>application/json</option>
-          <option>application/xml</option>
-        </select>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
