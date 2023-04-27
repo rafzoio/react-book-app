@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { xmlBuilder } from "../utils/xmlBuilder";
 
 const AddBook = () => {
   const [format, setFormat] = useState("application/json");
@@ -16,24 +17,7 @@ const AddBook = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const xmlbuilder = require("xmlbuilder");
-
-    const newBookXml = xmlbuilder
-      .create("bookList")
-      .ele("book")
-      .ele("title", newBook.title)
-      .up()
-      .ele("author", newBook.author)
-      .up()
-      .ele("date", newBook.date)
-      .up()
-      .ele("genres", newBook.genres)
-      .up()
-      .ele("characters", newBook.characters)
-      .up()
-      .ele("synopsis", newBook.synopsis)
-      .up()
-      .end({ pretty: true });
+    const newBookXml = xmlBuilder(newBook);
 
     const postData =
       format === "application/xml" ? newBookXml : { books: [newBook] };

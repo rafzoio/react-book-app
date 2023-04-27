@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import xmlBuilder from "../utils/xmlBuilder";
 
 const UpdateBook = () => {
   const { id } = useParams();
@@ -42,22 +43,7 @@ const UpdateBook = () => {
     event.preventDefault();
     const xmlbuilder = require("xmlbuilder");
 
-    const newBookXml = xmlbuilder
-      .create("bookList")
-      .ele("book")
-      .ele("title", existingBook.title)
-      .up()
-      .ele("author", existingBook.author)
-      .up()
-      .ele("date", existingBook.date)
-      .up()
-      .ele("genres", existingBook.genres)
-      .up()
-      .ele("characters", existingBook.characters)
-      .up()
-      .ele("synopsis", existingBook.synopsis)
-      .up()
-      .end({ pretty: true });
+    const newBookXml = xmlBuilder(existingBook);
 
     const postData =
       format === "application/xml" ? newBookXml : { books: [existingBook] };
