@@ -9,6 +9,7 @@ import AllBooks from "./pages/AllBooks";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import Settings from "./pages/Settings";
 import UpdateBook from "./pages/UpdateBook";
 import store from "./redux/store";
 
@@ -25,6 +26,7 @@ function App() {
               <Route path="/books" element={<AllBooks />} />
               <Route path="/add" element={<AddBook />} />
               <Route path="/update/:id" element={<UpdateBook />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/books/:id" element={<Detail />} />
               <Route path="/about" element={<About />} />
               <Route path="/search" element={<Search />} />
