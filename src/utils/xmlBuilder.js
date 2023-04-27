@@ -1,4 +1,4 @@
-export function xmlBuilder(newBook) {
+const xmlBuilder = (newBook) => {
   const xmlbuilder = require("xmlbuilder");
   return xmlbuilder
     .create("bookList")
@@ -16,4 +16,6 @@ export function xmlBuilder(newBook) {
     .ele("synopsis", newBook.synopsis)
     .up()
     .end({ pretty: true });
-}
+};
+
+export default xmlBuilder;
