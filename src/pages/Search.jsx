@@ -39,6 +39,7 @@ const Search = () => {
 
   return (
     <div>
+      <h1 className="text-4xl font-extrabold my-2 p-2 text-white">Search</h1>
       <form onSubmit={handleSubmit}>
         <label
           for="default-search"
