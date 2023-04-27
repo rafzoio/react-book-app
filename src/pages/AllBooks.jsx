@@ -59,7 +59,13 @@ const AllBooks = () => {
 
   return (
     <div className="mt-4">
-      <div className="relative flex flex-row justify-between gap-2 p-2 px-4 bg-gray-800 rounded-t-lg right-auto">
+      <div
+        className={
+          isLoading
+            ? "relative flex flex-row justify-between gap-2 p-2 px-4 bg-gray-800 rounded-lg right-auto"
+            : "relative flex flex-row justify-between gap-2 p-2 px-4 bg-gray-800 rounded-t-lg right-auto"
+        }
+      >
         <div className="flex flex-row gap-3">
           <Link
             className="text-white hover:text-blue-600"
