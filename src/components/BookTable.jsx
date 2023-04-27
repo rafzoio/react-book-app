@@ -21,11 +21,7 @@ const BookTable = ({ books, onDelete }) => {
       toast.success("Book " + book.id + " deleted successfully");
       onDelete(book.id);
     } catch (error) {
-      toast.promise(Promise.reject(), {
-        pending: "Deleting book...",
-        success: "Book deleted successfully!",
-        error: "Failed to delete book.",
-      });
+      toast.error("Error deleting book " + book.id);
     }
   };
 
