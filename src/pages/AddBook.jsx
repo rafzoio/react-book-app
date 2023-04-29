@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import bookToPlainText from "../utils/bookToPlainText";
 import xmlBuilder from "../utils/xmlBuilder";
 
 const AddBook = () => {
-  const dispatch = useDispatch();
   const format = useSelector((state) => state.format.currentFormat);
   const [newBook, setNewBook] = useState({
     title: "",
@@ -21,8 +21,15 @@ const AddBook = () => {
 
     const newBookXml = xmlBuilder(newBook);
 
-    const postData =
-      format === "application/xml" ? newBookXml : { books: [newBook] };
+    let postData = null;
+
+    if (format === "application/xml") {
+      postData = newBookXml;
+    } else if (format === "text/plain") {
+      postData = bookToPlainText(newBook);
+    } else {
+      postData = { books: [newBook] };
+    }
 
     try {
       const response = await axios.post(
