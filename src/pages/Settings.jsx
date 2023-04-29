@@ -9,7 +9,7 @@ const Settings = () => {
 
   const changeFormat = (event) => {
     event.preventDefault();
-    dispatch({ type: "SET_FORMAT", payload: format });
+    dispatch({ type: "SET_FORMAT", payload: currentFormat });
     toast.success("Settings updated");
   };
 
@@ -29,9 +29,10 @@ const Settings = () => {
           >
             <option>application/json</option>
             <option>application/xml</option>
+            <option>text/plain</option>
           </select>
 
-          <button className=" w-60 text-black focus:ring-4 focus:outline-none font-bold rounded-lg text-medium py-2.5 text-center bg-gray-200 hover:bg-gray-400">
+          <button className="w-60 text-black focus:ring-4 focus:outline-none font-bold rounded-lg text-medium py-2.5 text-center bg-gray-200 hover:bg-gray-400">
             Save settings
           </button>
         </section>
