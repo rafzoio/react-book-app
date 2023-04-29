@@ -17,7 +17,7 @@ const Settings = () => {
     <div className="flex flex-col align-middle mx-auto w-full items-center">
       <h1 className="text-4xl font-extrabold my-2 p-2 text-white">Settings</h1>
       <form className="p-2" onSubmit={changeFormat}>
-        <section className="gap-4 flex flex-row gap-3 items-center">
+        <section className="gap-4 flex flex-row items-center">
           <label className="text-white" htmlFor="format-dropdown">
             Format:
           </label>
