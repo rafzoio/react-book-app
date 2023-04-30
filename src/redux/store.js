@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-const initialState = {
+const pageInitialState = {
   currentPage: 1,
+};
+
+const formatInitialState = {
   currentFormat: "application/json",
 };
 
-const pageReducer = (state = initialState, action) => {
+const pageReducer = (state = pageInitialState, action) => {
   switch (action.type) {
     case "SET_CURRENT_PAGE":
       return {
@@ -17,7 +20,7 @@ const pageReducer = (state = initialState, action) => {
   }
 };
 
-const formatReducer = (state = initialState, action) => {
+const formatReducer = (state = formatInitialState, action) => {
   switch (action.type) {
     case "SET_FORMAT":
       return {
