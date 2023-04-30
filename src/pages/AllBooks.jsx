@@ -56,6 +56,11 @@ const AllBooks = () => {
     }
   };
 
+  const handlePageLengthChange = (event) => {
+    setPageLength(event.target.dataset.value);
+    dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
+  };
+
   return (
     <div className="mt-4">
       <div
@@ -111,11 +116,21 @@ const AllBooks = () => {
         </div>
         <div className="relative ml-10 text-white flex flex-row gap-3">
           <p>Page Length:</p>
-          <Link onClick={() => setPageLength(5)}>5</Link>
-          <Link onClick={() => setPageLength(10)}>10</Link>
-          <Link onClick={() => setPageLength(20)}>20</Link>
-          <Link onClick={() => setPageLength(50)}>50</Link>
-          <Link onClick={() => setPageLength(100)}>100</Link>
+          <Link data-value="5" onClick={(e) => handlePageLengthChange(e)}>
+            5
+          </Link>
+          <Link data-value="10" onClick={(e) => handlePageLengthChange(e)}>
+            10
+          </Link>
+          <Link data-value="20" onClick={(e) => handlePageLengthChange(e)}>
+            20
+          </Link>
+          <Link data-value="50" onClick={(e) => handlePageLengthChange(e)}>
+            50
+          </Link>
+          <Link data-value="100" onClick={(e) => handlePageLengthChange(e)}>
+            100
+          </Link>
         </div>
       </div>
       <div className="pt-0">
