@@ -18,7 +18,6 @@ const AllBooks = () => {
     const fetchBooks = debounce(async () => {
       try {
         setIsLoading(true);
-        console.log(page);
         const response = await axios.get(
           `http://localhost:8081/book-api/book-api?page=${page}&pageSize=${pageLength}`,
           {
@@ -34,7 +33,7 @@ const AllBooks = () => {
       } catch (error) {
         console.error(error);
       }
-    }, 100);
+    }, 1000);
     fetchBooks();
   }, [page, pageLength]);
 
@@ -94,7 +93,9 @@ const AllBooks = () => {
           <Link
             className="text-white hover:text-blue-600"
             onClick={() => {
-              handlePageChange(page + 1);
+              if (page !== numPages) {
+                handlePageChange(page + 1);
+              }
             }}
           >
             Next
