@@ -21,7 +21,6 @@ const Detail = () => {
 
   const deleteBook = async (id) => {
     try {
-      console.log("Hello");
       await axios.delete("http://localhost:8081/book-api/book-api?id=" + id, {
         headers: {
           Accept: "application/json",
@@ -39,7 +38,6 @@ const Detail = () => {
     const fetchBook = async () => {
       try {
         setIsLoading(true);
-        console.log("Hello");
         const response = await axios.get(
           "http://localhost:8081/book-api/book-api",
           {

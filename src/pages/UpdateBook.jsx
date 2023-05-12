@@ -20,10 +20,8 @@ const UpdateBook = () => {
   });
 
   useEffect(() => {
-    console.log("hello");
     const fetchBook = async () => {
       try {
-        console.log("Hello");
         const response = await axios.get(
           "http://localhost:8081/book-api/book-api",
           {
