@@ -1,5 +1,4 @@
 import axios from "axios";
-import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,12 +14,16 @@ const AllBooks = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchBooks = debounce(async () => {
+    const fetchBooks = async () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `http://localhost:8081/book-api/book-api?page=${page}&pageSize=${pageLength}`,
+          "http://localhost:8081/book-api/book-api",
           {
+            params: {
+              page: page,
+              pageLength: pageLength,
+            },
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -33,7 +36,7 @@ const AllBooks = () => {
       } catch (error) {
         console.error(error);
       }
-    }, 1000);
+    };
     fetchBooks();
   }, [page, pageLength]);
 

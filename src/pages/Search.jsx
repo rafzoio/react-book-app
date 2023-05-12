@@ -13,8 +13,11 @@ const Search = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        "http://localhost:8081/book-api/book-api?title=" + searchValue,
+        "http://localhost:8081/book-api/book-api",
         {
+          params: {
+            title: searchValue,
+          },
           headers: {
             Accept: "application/json",
           },

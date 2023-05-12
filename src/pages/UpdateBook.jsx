@@ -25,8 +25,11 @@ const UpdateBook = () => {
       try {
         console.log("Hello");
         const response = await axios.get(
-          "http://localhost:8081/book-api/book-api?id=" + id,
+          "http://localhost:8081/book-api/book-api",
           {
+            params: {
+              id: id,
+            },
             headers: {
               Accept: "application/json",
             },
