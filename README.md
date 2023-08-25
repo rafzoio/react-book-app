@@ -1,6 +1,6 @@
 # ReactJS Book Database Crud Application
 
-## What it can do
+## Features
 
 - Crud access through Java Servlet API requests
 - Display all books at a chosen page size with links to delete and update books.
